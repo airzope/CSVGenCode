@@ -33,10 +33,13 @@ class Program {
     static void Main(string[] args) {
         if (args.Length == 0) {
             args = new string[] {
-                "-i=../Input",
-                "-o=../Config/Cpp/Output",
-                "-t=../Config/Cpp/Templet",
-                "-r=../Config/Cpp/KeywordMapRule.txt"
+                //"-i=../Input",
+                //"-o=../Config/Cpp/Output",
+                //"-t=../Config/Cpp/Templet",
+                //"-r=../Config/Cpp/KeywordMapRule.txt"
+                "-i=../XLS",
+                "-o=../OutCSV",
+                "-xls2csv",
             };
         }
         foreach (var arg in args) {
@@ -45,20 +48,32 @@ class Program {
         if (isHelp) {
             return;
         }
-        if (CheckInvalid(TempletPath, "TempletPath", "t") ||
-            CheckInvalid(InputDir, "InputDir", "i") ||
-            CheckInvalid(OutputDir, "OutputDir", "o") ||
-            CheckInvalid(ConfigFile, "ConfigFile", "r")
-            ) {
-            Console.Read();
-            return;
+        if (isExl2Csv) {
+            if ( CheckInvalid(InputDir, "InputDir", "i") ||
+                CheckInvalid(OutputDir, "OutputDir", "o") 
+                ) {
+                Console.Read();
+                return;
+            }
+            var gener = new CSVGenCode.Exl2CSV();
+            gener.ConvertCSV(_P(InputDir), _P(OutputDir));
+        } else {
+            if (CheckInvalid(TempletPath, "TempletPath", "t") ||
+                CheckInvalid(InputDir, "InputDir", "i") ||
+                CheckInvalid(OutputDir, "OutputDir", "o") ||
+                CheckInvalid(ConfigFile, "ConfigFile", "r")
+                ) {
+                Console.Read();
+                return;
+            }
+            var gener = new CSVGenCode.CSVToCppCodeGen();
+            gener.GenCode(_P(InputDir), _P(OutputDir), _P(TempletPath), _P(ConfigFile));
         }
-        var gener = new CSVGenCode.CSVToCppCodeGen();
-        gener.GenCode(_P(InputDir), _P(OutputDir), _P(TempletPath), _P(ConfigFile));
     }
-    static bool CheckInvalid(string val, string valName,string key) {
+
+    static bool CheckInvalid(string val, string valName, string key) {
         if (string.IsNullOrEmpty(val)) {
-            Debug.LogError("Error: missing val "+valName +" please use -" + key + "=XxxxXx to input the val");
+            Debug.LogError("Error: missing val " + valName + " please use -" + key + "=XxxxXx to input the val");
             return true;
         }
         return false;
@@ -77,6 +92,7 @@ class Program {
 -r      Rule file for generate code
 -h      show command info
 -help   sameAs the -h
+-xls2csv Convert XLS to CSV format
 -----------------------------------------------------
 example 
 CSVCodeGen.exe -i=../Input -o=../Config/Cpp/Output -t=../Config/Cpp/Templet -r=../Config/Cpp/KeywordMapRule.txt 
@@ -87,11 +103,19 @@ CSVCodeGen.exe -i=../Input -o=../Config/Cpp/Output -t=../Config/Cpp/Templet -r=.
     static void DealParams(string para) {
         ParseParam(para, "-h", Help);
         ParseParam(para, "-help", Help);
+        ParseParam(para, "-xls2csv", Exl2CSV);
         ParseParam(para, "-i", ref InputDir);
         ParseParam(para, "-o", ref OutputDir);
         ParseParam(para, "-t", ref TempletPath);
         ParseParam(para, "-r", ref ConfigFile);
     }
+
+
+    static bool isExl2Csv = false;
+    static void Exl2CSV() {
+        isExl2Csv = true;
+    }
+
 
     private static void ParseParam(string para, string tag, ref string val, char sep = '=') {
         var tempPara = para.ToLower();

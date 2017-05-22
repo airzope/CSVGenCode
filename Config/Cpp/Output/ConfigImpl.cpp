@@ -14,28 +14,24 @@
 #include "CSVParser.h"
 using namespace std;
 
-const char* CHeroQualityUpTest::FILE_NAME   = "hero_quality_up_test.csv";
-int CHeroQualityUpTest::Load(const char* szDir)
+const char* CCFG_VipLevelTest::FILE_NAME   = "vip_level_test.csv";
+int CCFG_VipLevelTest::Load(const char* szDir)
 {
 	try
 	{
 		std::string szFileName(szDir);
-    	szFileName = szFileName + "/" + CHeroQualityUpTest::FILE_NAME;
+    	szFileName = szFileName + "/" + CCFG_VipLevelTest::FILE_NAME;
 		csv::CSVParser oParser = csv::CSVParser(szFileName);
 		for (int i = 2; i < oParser.RowCount(); ++i) {
-			SHeroQualityUpTest conent;
+			SCFG_VipLevelTest conent;
 		    int nColumn = 0;
-		    int id = oParser.ReadInt32(i, 0);
-		    int llKey = id;
-			conent.id = oParser.ReadInt32(i, nColumn++);
-			conent.hero_id = oParser.ReadString(i, nColumn++);
-			conent.quality = oParser.ReadInt32(i, nColumn++);
-			conent.gold = oParser.ReadInt32(i, nColumn++);
-			conent.maxHP = oParser.ReadInt32(i, nColumn++);
-			conent.attack = oParser.ReadFloat(i, nColumn++);
-			conent.defense = oParser.ReadFloat(i, nColumn++);
-			conent.date = oParser.ReadString(i, nColumn++);
-			conent.starttime = oParser.ReadString(i, nColumn++);
+		    int id1 = oParser.ReadInt32(i, 0);
+		    int llKey = id1;
+			conent.id1 = oParser.ReadInt32(i, nColumn++);
+			conent.id2 = oParser.ReadString(i, nColumn++);
+			conent.id3 = oParser.ReadInt32(i, nColumn++);
+			conent.id4 = oParser.ReadString(i, nColumn++);
+			conent.id6 = oParser.ReadString(i, nColumn++);
 
 		    m_mapContent[llKey] = conent;
 		}
@@ -46,9 +42,9 @@ int CHeroQualityUpTest::Load(const char* szDir)
 	}
 	return 0;
 }
-const SHeroQualityUpTest *CHeroQualityUpTest::Find(int	id) const
+const SCFG_VipLevelTest *CCFG_VipLevelTest::Find(int	id1) const
 {
-	int llKey = id;
+	int llKey = id1;
 
 	auto it = m_mapContent.find(llKey);
 	if (it != m_mapContent.end())
@@ -58,76 +54,50 @@ const SHeroQualityUpTest *CHeroQualityUpTest::Find(int	id) const
 	return NULL;
 }
 
-int CHeroQualityUpTest::Print() const
+int CCFG_VipLevelTest::Print() const
 {
     const int MAX_FIELD_WIDTH  = 16;
-	cout << "------------------------- HeroQualityUpTest [" << m_mapContent.size() << "] ------------------------------" << endl;
+	cout << "------------------------- VipLevelTest [" << m_mapContent.size() << "] ------------------------------" << endl;
 	cout << setiosflags(ios::left);
-	cout << setw(MAX_FIELD_WIDTH) << "id";
-	cout << setw(MAX_FIELD_WIDTH) << "hero_id";
-	cout << setw(MAX_FIELD_WIDTH) << "quality";
-	cout << setw(MAX_FIELD_WIDTH) << "gold";
-	cout << setw(MAX_FIELD_WIDTH) << "maxHP";
-	cout << setw(MAX_FIELD_WIDTH) << "attack";
-	cout << setw(MAX_FIELD_WIDTH) << "defense";
-	cout << setw(MAX_FIELD_WIDTH) << "date";
-	cout << setw(MAX_FIELD_WIDTH) << "starttime";
+	cout << setw(MAX_FIELD_WIDTH) << "id1";
+	cout << setw(MAX_FIELD_WIDTH) << "id2";
+	cout << setw(MAX_FIELD_WIDTH) << "id3";
+	cout << setw(MAX_FIELD_WIDTH) << "id4";
+	cout << setw(MAX_FIELD_WIDTH) << "id6";
 
 	cout << endl;
 	for(auto it = m_mapContent.begin(); it != m_mapContent.end();it++)
 	{
 		auto val = it->second;
-		cout << setw(MAX_FIELD_WIDTH) << val.id;
-		cout << setw(MAX_FIELD_WIDTH) << val.hero_id;
-		cout << setw(MAX_FIELD_WIDTH) << val.quality;
-		cout << setw(MAX_FIELD_WIDTH) << val.gold;
-		cout << setw(MAX_FIELD_WIDTH) << val.maxHP;
-		cout << setw(MAX_FIELD_WIDTH) << val.attack;
-		cout << setw(MAX_FIELD_WIDTH) << val.defense;
-		cout << setw(MAX_FIELD_WIDTH) << val.date;
-		cout << setw(MAX_FIELD_WIDTH) << val.starttime;
+		cout << setw(MAX_FIELD_WIDTH) << val.id1;
+		cout << setw(MAX_FIELD_WIDTH) << val.id2;
+		cout << setw(MAX_FIELD_WIDTH) << val.id3;
+		cout << setw(MAX_FIELD_WIDTH) << val.id4;
+		cout << setw(MAX_FIELD_WIDTH) << val.id6;
 
 		cout << endl;
 	}
 	return 0;
 }
 
-const char* CVipLevelTest::FILE_NAME   = "vip_level_test.csv";
-int CVipLevelTest::Load(const char* szDir)
+const char* CCFG_VipLevelTest2::FILE_NAME   = "vip_level_test2.csv";
+int CCFG_VipLevelTest2::Load(const char* szDir)
 {
 	try
 	{
 		std::string szFileName(szDir);
-    	szFileName = szFileName + "/" + CVipLevelTest::FILE_NAME;
+    	szFileName = szFileName + "/" + CCFG_VipLevelTest2::FILE_NAME;
 		csv::CSVParser oParser = csv::CSVParser(szFileName);
 		for (int i = 2; i < oParser.RowCount(); ++i) {
-			SVipLevelTest conent;
+			SCFG_VipLevelTest2 conent;
 		    int nColumn = 0;
-		    int id = oParser.ReadInt32(i, 1);
-		    int llKey = id;
-			conent.id = oParser.ReadInt32(i, nColumn++);
-			conent.vip_level = oParser.ReadInt32(i, nColumn++);
-			conent.vip_exp = oParser.ReadInt32(i, nColumn++);
-			conent.sweeper = oParser.ReadInt32(i, nColumn++);
-			conent.purchase_energy_count = oParser.ReadInt32(i, nColumn++);
-			conent.purchase_midas_count = oParser.ReadInt32(i, nColumn++);
-			conent.reset_elite_count = oParser.ReadInt32(i, nColumn++);
-			conent.reset_arena_count = oParser.ReadInt32(i, nColumn++);
-			conent.reset_expedition_count = oParser.ReadInt32(i, nColumn++);
-			conent.signpatch = oParser.ReadInt32(i, nColumn++);
-			conent.unlock_function = oParser.ReadString(i, nColumn++);
-			conent.unlock_fuction_att = oParser.ReadString(i, nColumn++);
-			conent.skillpoint_restore_time = oParser.ReadInt32(i, nColumn++);
-			conent.midas_crit_rate = oParser.ReadFloat(i, nColumn++);
-			conent.add_arena_count = oParser.ReadInt32(i, nColumn++);
-			conent.arena_cd = oParser.ReadInt32(i, nColumn++);
-			conent.item5 = oParser.ReadString(i, nColumn++);
-			conent.item6 = oParser.ReadString(i, nColumn++);
-			conent.equivalent_value = oParser.ReadInt32(i, nColumn++);
-			conent.purchase_huoli_count = oParser.ReadInt32(i, nColumn++);
-			conent.purchase_cristal_count = oParser.ReadInt32(i, nColumn++);
-			conent.cristal_crit_rate = oParser.ReadFloat(i, nColumn++);
-			conent.reset_dungeon_count = oParser.ReadInt32(i, nColumn++);
+		    int id1 = oParser.ReadInt32(i, 0);
+		    int llKey = id1;
+			conent.id1 = oParser.ReadInt32(i, nColumn++);
+			conent.id2 = oParser.ReadString(i, nColumn++);
+			conent.id3 = oParser.ReadInt32(i, nColumn++);
+			conent.id4 = oParser.ReadString(i, nColumn++);
+			conent.id6 = oParser.ReadString(i, nColumn++);
 
 		    m_mapContent[llKey] = conent;
 		}
@@ -138,9 +108,9 @@ int CVipLevelTest::Load(const char* szDir)
 	}
 	return 0;
 }
-const SVipLevelTest *CVipLevelTest::Find(int	id) const
+const SCFG_VipLevelTest2 *CCFG_VipLevelTest2::Find(int	id1) const
 {
-	int llKey = id;
+	int llKey = id1;
 
 	auto it = m_mapContent.find(llKey);
 	if (it != m_mapContent.end())
@@ -150,62 +120,26 @@ const SVipLevelTest *CVipLevelTest::Find(int	id) const
 	return NULL;
 }
 
-int CVipLevelTest::Print() const
+int CCFG_VipLevelTest2::Print() const
 {
     const int MAX_FIELD_WIDTH  = 16;
-	cout << "------------------------- VipLevelTest [" << m_mapContent.size() << "] ------------------------------" << endl;
+	cout << "------------------------- VipLevelTest2 [" << m_mapContent.size() << "] ------------------------------" << endl;
 	cout << setiosflags(ios::left);
-	cout << setw(MAX_FIELD_WIDTH) << "id";
-	cout << setw(MAX_FIELD_WIDTH) << "vip_level";
-	cout << setw(MAX_FIELD_WIDTH) << "vip_exp";
-	cout << setw(MAX_FIELD_WIDTH) << "sweeper";
-	cout << setw(MAX_FIELD_WIDTH) << "purchase_energy_count";
-	cout << setw(MAX_FIELD_WIDTH) << "purchase_midas_count";
-	cout << setw(MAX_FIELD_WIDTH) << "reset_elite_count";
-	cout << setw(MAX_FIELD_WIDTH) << "reset_arena_count";
-	cout << setw(MAX_FIELD_WIDTH) << "reset_expedition_count";
-	cout << setw(MAX_FIELD_WIDTH) << "signpatch";
-	cout << setw(MAX_FIELD_WIDTH) << "unlock_function";
-	cout << setw(MAX_FIELD_WIDTH) << "unlock_fuction_att";
-	cout << setw(MAX_FIELD_WIDTH) << "skillpoint_restore_time";
-	cout << setw(MAX_FIELD_WIDTH) << "midas_crit_rate";
-	cout << setw(MAX_FIELD_WIDTH) << "add_arena_count";
-	cout << setw(MAX_FIELD_WIDTH) << "arena_cd";
-	cout << setw(MAX_FIELD_WIDTH) << "item5";
-	cout << setw(MAX_FIELD_WIDTH) << "item6";
-	cout << setw(MAX_FIELD_WIDTH) << "equivalent_value";
-	cout << setw(MAX_FIELD_WIDTH) << "purchase_huoli_count";
-	cout << setw(MAX_FIELD_WIDTH) << "purchase_cristal_count";
-	cout << setw(MAX_FIELD_WIDTH) << "cristal_crit_rate";
-	cout << setw(MAX_FIELD_WIDTH) << "reset_dungeon_count";
+	cout << setw(MAX_FIELD_WIDTH) << "id1";
+	cout << setw(MAX_FIELD_WIDTH) << "id2";
+	cout << setw(MAX_FIELD_WIDTH) << "id3";
+	cout << setw(MAX_FIELD_WIDTH) << "id4";
+	cout << setw(MAX_FIELD_WIDTH) << "id6";
 
 	cout << endl;
 	for(auto it = m_mapContent.begin(); it != m_mapContent.end();it++)
 	{
 		auto val = it->second;
-		cout << setw(MAX_FIELD_WIDTH) << val.id;
-		cout << setw(MAX_FIELD_WIDTH) << val.vip_level;
-		cout << setw(MAX_FIELD_WIDTH) << val.vip_exp;
-		cout << setw(MAX_FIELD_WIDTH) << val.sweeper;
-		cout << setw(MAX_FIELD_WIDTH) << val.purchase_energy_count;
-		cout << setw(MAX_FIELD_WIDTH) << val.purchase_midas_count;
-		cout << setw(MAX_FIELD_WIDTH) << val.reset_elite_count;
-		cout << setw(MAX_FIELD_WIDTH) << val.reset_arena_count;
-		cout << setw(MAX_FIELD_WIDTH) << val.reset_expedition_count;
-		cout << setw(MAX_FIELD_WIDTH) << val.signpatch;
-		cout << setw(MAX_FIELD_WIDTH) << val.unlock_function;
-		cout << setw(MAX_FIELD_WIDTH) << val.unlock_fuction_att;
-		cout << setw(MAX_FIELD_WIDTH) << val.skillpoint_restore_time;
-		cout << setw(MAX_FIELD_WIDTH) << val.midas_crit_rate;
-		cout << setw(MAX_FIELD_WIDTH) << val.add_arena_count;
-		cout << setw(MAX_FIELD_WIDTH) << val.arena_cd;
-		cout << setw(MAX_FIELD_WIDTH) << val.item5;
-		cout << setw(MAX_FIELD_WIDTH) << val.item6;
-		cout << setw(MAX_FIELD_WIDTH) << val.equivalent_value;
-		cout << setw(MAX_FIELD_WIDTH) << val.purchase_huoli_count;
-		cout << setw(MAX_FIELD_WIDTH) << val.purchase_cristal_count;
-		cout << setw(MAX_FIELD_WIDTH) << val.cristal_crit_rate;
-		cout << setw(MAX_FIELD_WIDTH) << val.reset_dungeon_count;
+		cout << setw(MAX_FIELD_WIDTH) << val.id1;
+		cout << setw(MAX_FIELD_WIDTH) << val.id2;
+		cout << setw(MAX_FIELD_WIDTH) << val.id3;
+		cout << setw(MAX_FIELD_WIDTH) << val.id4;
+		cout << setw(MAX_FIELD_WIDTH) << val.id6;
 
 		cout << endl;
 	}

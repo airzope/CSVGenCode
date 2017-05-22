@@ -10,14 +10,16 @@ const char* CConfigMgr::CFG_CSV_DIR = "../../../Input";
 #else
 const char* CConfigMgr::CFG_CSV_DIR = "../cfg/csv";
 #endif
-
+char* CConfigMgr::ErrorFileName= "";
 int CConfigMgr::LoadAll()
 {
 	int iRet = 0;
-	iRet = m_stHeroQualityUpTest.Load(CFG_CSV_DIR);
-	SO_CFG_RT_IF_NOT_ZERO(m_stHeroQualityUpTest.Load, -1);
+	ErrorFileName = "VipLevelTest";
 	iRet = m_stVipLevelTest.Load(CFG_CSV_DIR);
 	SO_CFG_RT_IF_NOT_ZERO(m_stVipLevelTest.Load, -1);
+	ErrorFileName = "VipLevelTest2";
+	iRet = m_stVipLevelTest2.Load(CFG_CSV_DIR);
+	SO_CFG_RT_IF_NOT_ZERO(m_stVipLevelTest2.Load, -1);
 
 	return 0;
 }
@@ -31,8 +33,8 @@ int CConfigMgr::Reload()
 
 void CConfigMgr::PrintAll()
 {
-	m_stHeroQualityUpTest.Print();
 	m_stVipLevelTest.Print();
+	m_stVipLevelTest2.Print();
 
 }
 

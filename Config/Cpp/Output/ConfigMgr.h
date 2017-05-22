@@ -11,6 +11,8 @@
 class CConfigMgr
 {
 	static const char* CFG_CSV_DIR;
+public:
+	static char* ErrorFileName;
 
 public:
 	static CConfigMgr& Instance()
@@ -24,12 +26,12 @@ public:
 	void PrintAll();
 
 public:
-    const CHeroQualityUpTest &GetHeroQualityUpTest() const { return m_stHeroQualityUpTest;}
-    const CVipLevelTest &GetVipLevelTest() const { return m_stVipLevelTest;}
+    const CCFG_VipLevelTest &GetVipLevelTest() const { return m_stVipLevelTest;}
+    const CCFG_VipLevelTest2 &GetVipLevelTest2() const { return m_stVipLevelTest2;}
 
 private:
-    CHeroQualityUpTest m_stHeroQualityUpTest;
-    CVipLevelTest m_stVipLevelTest;
+    CCFG_VipLevelTest m_stVipLevelTest;
+    CCFG_VipLevelTest2 m_stVipLevelTest2;
 
 private:
 	CConfigMgr() {}

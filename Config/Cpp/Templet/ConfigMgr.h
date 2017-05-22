@@ -11,6 +11,8 @@
 class CConfigMgr
 {
 	static const char* CFG_CSV_DIR;
+public:
+	static char* ErrorFileName;
 
 public:
 	static CConfigMgr& Instance()

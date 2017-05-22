@@ -10,31 +10,31 @@
 #include <map>
 using namespace std;
 
-class CHeroQualityUpTest {
+class CCFG_VipLevelTest {
     static const char* FILE_NAME;
 public:
-    CHeroQualityUpTest() { };
-    ~CHeroQualityUpTest() { };
+    CCFG_VipLevelTest() { };
+    ~CCFG_VipLevelTest() { };
 
     int Load(const char* szDir);
     void Clear() { m_mapContent.clear(); }
     int Print() const;
-    const SHeroQualityUpTest* Find( int  id) const;
+    const SCFG_VipLevelTest* Find( int  id1) const;
 private:
-    map<int, SHeroQualityUpTest> m_mapContent;
+    map<int, SCFG_VipLevelTest> m_mapContent;
 };
-class CVipLevelTest {
+class CCFG_VipLevelTest2 {
     static const char* FILE_NAME;
 public:
-    CVipLevelTest() { };
-    ~CVipLevelTest() { };
+    CCFG_VipLevelTest2() { };
+    ~CCFG_VipLevelTest2() { };
 
     int Load(const char* szDir);
     void Clear() { m_mapContent.clear(); }
     int Print() const;
-    const SVipLevelTest* Find( int  id) const;
+    const SCFG_VipLevelTest2* Find( int  id1) const;
 private:
-    map<int, SVipLevelTest> m_mapContent;
+    map<int, SCFG_VipLevelTest2> m_mapContent;
 };
 
 

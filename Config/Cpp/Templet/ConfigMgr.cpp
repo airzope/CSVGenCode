@@ -10,11 +10,12 @@ const char* CConfigMgr::CFG_CSV_DIR = "../../../Input";
 #else
 const char* CConfigMgr::CFG_CSV_DIR = "../cfg/csv";
 #endif
-
+char* CConfigMgr::ErrorFileName= "";
 int CConfigMgr::LoadAll()
 {
 	int iRet = 0;
 #Begin_Replace_Tag_Class
+	ErrorFileName = "#FileName";
 	iRet = m_st#FileName.Load(CFG_CSV_DIR);
 	SO_CFG_RT_IF_NOT_ZERO(m_st#FileName.Load, -1);
 #End_Replace_Tag_Class

@@ -47,6 +47,11 @@ namespace CSVGenCode {
                 return typeName;
             }
         }
+        public static int CommentIdx = 0;
+        public static int AttrNameIdx = 1;
+        public static int TypeIdx = 2;
+        public static int MaxHeadIdx = 3;
+
     }
 
     public class GenTypeInfo {
@@ -131,10 +136,9 @@ namespace CSVGenCode {
                 }
             }
             var info = new GenTypeInfo();
-            int __idx = 0;
-            var comment = grid[__idx++];
-            var attrName = grid[__idx++];
-            var attrType = grid[__idx++];
+            var comment = grid[GlobalVal.CommentIdx];
+            var attrName = grid[GlobalVal.AttrNameIdx];
+            var attrType = grid[GlobalVal.TypeIdx];
             info.RawFileName = fileName;
             int keyIdx = GetMainKeyIdx(attrName);
             info.KeyTypeName = GlobalVal.CSVType2CodeType(attrType[keyIdx]);

@@ -16,6 +16,7 @@ int main(int argc, char **argv)
 #endif
 		auto ret = CConfigMgr::Instance().LoadAll();
 		if (ret) {
+			cout << CConfigMgr::ErrorFileName << endl;
 			cout << "Load Config error" << endl;
 		}
 		else {
