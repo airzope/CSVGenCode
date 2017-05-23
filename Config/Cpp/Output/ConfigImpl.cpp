@@ -14,6 +14,120 @@
 #include "CSVParser.h"
 using namespace std;
 
+const char* CCFG_SJScene::FILE_NAME   = "SJScene.csv";
+int CCFG_SJScene::Load(const char* szDir)
+{
+	try
+	{
+		std::string szFileName(szDir);
+    	szFileName = szFileName + "/" + CCFG_SJScene::FILE_NAME;
+		csv::CSVParser oParser = csv::CSVParser(szFileName);
+		for (int i = 2; i < oParser.RowCount(); ++i) {
+			SCFG_SJScene conent;
+		    int nColumn = 0;
+		    int SceneLevel = oParser.ReadInt32(i, 0);
+		    int llKey = SceneLevel;
+			conent.SceneLevel = oParser.ReadUInt32(i, nColumn++);
+			conent.SceneName = oParser.ReadString(i, nColumn++);
+			conent.AutoStart = oParser.ReadUInt32(i, nColumn++);
+			conent.TicketFee = oParser.ReadUInt32(i, nColumn++);
+			conent.MinCoin = oParser.ReadUInt32(i, nColumn++);
+			conent.MaxCoin = oParser.ReadUInt32(i, nColumn++);
+			conent.BaseCoin = oParser.ReadUInt32(i, nColumn++);
+			conent.EscapeShapreRate = oParser.ReadUInt32(i, nColumn++);
+			conent.MaxLose = oParser.ReadUInt32(i, nColumn++);
+			conent.EnableDouble = oParser.ReadUInt32(i, nColumn++);
+			conent.DoubleLimit = oParser.ReadUInt32(i, nColumn++);
+			conent.BaseMulity = oParser.ReadUInt32(i, nColumn++);
+			conent.BaseExp = oParser.ReadUInt32(i, nColumn++);
+			conent.GameType = oParser.ReadUInt32(i, nColumn++);
+			conent.MatchGame = oParser.ReadUInt32(i, nColumn++);
+			conent.FirstGiveTime = oParser.ReadUInt32(i, nColumn++);
+			conent.GiveTime = oParser.ReadUInt32(i, nColumn++);
+			conent.LogFlag = oParser.ReadUInt32(i, nColumn++);
+			conent.ErrLogFlag = oParser.ReadUInt32(i, nColumn++);
+			conent.LogPath = oParser.ReadString(i, nColumn++);
+			conent.RobotCfg = oParser.ReadString(i, nColumn++);
+
+		    m_mapContent[llKey] = conent;
+		}
+	}
+	catch (const std::exception&)
+	{
+		return -1;
+	}
+	return 0;
+}
+const SCFG_SJScene *CCFG_SJScene::Find(int	SceneLevel) const
+{
+	int llKey = SceneLevel;
+
+	auto it = m_mapContent.find(llKey);
+	if (it != m_mapContent.end())
+	{
+		return &it->second;
+	}
+	return NULL;
+}
+
+int CCFG_SJScene::Print() const
+{
+    const int MAX_FIELD_WIDTH  = 16;
+	cout << "------------------------- SJScene [" << m_mapContent.size() << "] ------------------------------" << endl;
+	cout << setiosflags(ios::left);
+	cout << setw(MAX_FIELD_WIDTH) << "SceneLevel";
+	cout << setw(MAX_FIELD_WIDTH) << "SceneName";
+	cout << setw(MAX_FIELD_WIDTH) << "AutoStart";
+	cout << setw(MAX_FIELD_WIDTH) << "TicketFee";
+	cout << setw(MAX_FIELD_WIDTH) << "MinCoin";
+	cout << setw(MAX_FIELD_WIDTH) << "MaxCoin";
+	cout << setw(MAX_FIELD_WIDTH) << "BaseCoin";
+	cout << setw(MAX_FIELD_WIDTH) << "EscapeShapreRate";
+	cout << setw(MAX_FIELD_WIDTH) << "MaxLose";
+	cout << setw(MAX_FIELD_WIDTH) << "EnableDouble";
+	cout << setw(MAX_FIELD_WIDTH) << "DoubleLimit";
+	cout << setw(MAX_FIELD_WIDTH) << "BaseMulity";
+	cout << setw(MAX_FIELD_WIDTH) << "BaseExp";
+	cout << setw(MAX_FIELD_WIDTH) << "GameType";
+	cout << setw(MAX_FIELD_WIDTH) << "MatchGame";
+	cout << setw(MAX_FIELD_WIDTH) << "FirstGiveTime";
+	cout << setw(MAX_FIELD_WIDTH) << "GiveTime";
+	cout << setw(MAX_FIELD_WIDTH) << "LogFlag";
+	cout << setw(MAX_FIELD_WIDTH) << "ErrLogFlag";
+	cout << setw(MAX_FIELD_WIDTH) << "LogPath";
+	cout << setw(MAX_FIELD_WIDTH) << "RobotCfg";
+
+	cout << endl;
+	for(auto it = m_mapContent.begin(); it != m_mapContent.end();it++)
+	{
+		auto val = it->second;
+		cout << setw(MAX_FIELD_WIDTH) << val.SceneLevel;
+		cout << setw(MAX_FIELD_WIDTH) << val.SceneName;
+		cout << setw(MAX_FIELD_WIDTH) << val.AutoStart;
+		cout << setw(MAX_FIELD_WIDTH) << val.TicketFee;
+		cout << setw(MAX_FIELD_WIDTH) << val.MinCoin;
+		cout << setw(MAX_FIELD_WIDTH) << val.MaxCoin;
+		cout << setw(MAX_FIELD_WIDTH) << val.BaseCoin;
+		cout << setw(MAX_FIELD_WIDTH) << val.EscapeShapreRate;
+		cout << setw(MAX_FIELD_WIDTH) << val.MaxLose;
+		cout << setw(MAX_FIELD_WIDTH) << val.EnableDouble;
+		cout << setw(MAX_FIELD_WIDTH) << val.DoubleLimit;
+		cout << setw(MAX_FIELD_WIDTH) << val.BaseMulity;
+		cout << setw(MAX_FIELD_WIDTH) << val.BaseExp;
+		cout << setw(MAX_FIELD_WIDTH) << val.GameType;
+		cout << setw(MAX_FIELD_WIDTH) << val.MatchGame;
+		cout << setw(MAX_FIELD_WIDTH) << val.FirstGiveTime;
+		cout << setw(MAX_FIELD_WIDTH) << val.GiveTime;
+		cout << setw(MAX_FIELD_WIDTH) << val.LogFlag;
+		cout << setw(MAX_FIELD_WIDTH) << val.ErrLogFlag;
+		cout << setw(MAX_FIELD_WIDTH) << val.LogPath;
+		cout << setw(MAX_FIELD_WIDTH) << val.RobotCfg;
+
+		cout << endl;
+	}
+	return 0;
+}
+
 const char* CCFG_VipLevelTest::FILE_NAME   = "vip_level_test.csv";
 int CCFG_VipLevelTest::Load(const char* szDir)
 {

@@ -51,6 +51,31 @@
 #include<string>
 using std::string;
 
+struct SCFG_SJScene
+{
+	int		SceneLevel;//场次级别
+	string		SceneName;//级别说明
+	int		AutoStart;//是否自动开始
+	int		TicketFee;//门票
+	int		MinCoin;//最少金币限制
+	int		MaxCoin;//最大金币限制
+	int		BaseCoin;//金币基数
+	int		EscapeShapreRate;//逃跑分享比例
+	int		MaxLose;//最多输钱
+	int		EnableDouble;//是否允许加倍
+	int		DoubleLimit;//加倍限制
+	int		BaseMulity;//基础倍数
+	int		BaseExp;//经验值
+	int		GameType;//玩法类型
+	int		MatchGame;//赛事类型
+	int		FirstGiveTime;//首次出牌时间
+	int		GiveTime;//普通出牌时间
+	int		LogFlag;//调试日志开关
+	int		ErrLogFlag;//错误日志开关
+	string		LogPath;//日志文件
+	string		RobotCfg;//机器人
+
+};
 struct SCFG_VipLevelTest
 {
 	int		id1;//索引ID1

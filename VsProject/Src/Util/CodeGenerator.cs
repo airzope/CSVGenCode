@@ -108,10 +108,13 @@ namespace CSVGenCode {
             var fileName = Path.GetFileName(path);
             return Path.Combine(OutputPath, fileName);
         }
-        public void GenCode(string InputPath, string OutputPath, string TempletPath, string ConfigFile) {
+        public void GenCode(List<string> InputPaths, string OutputPath, string TempletPath, string ConfigFile) {
             ConfigHelper.ReadConfig(ConfigFile);
             this.OutputPath = OutputPath;
-            Util.Walk(InputPath, "*.csv", ReadCsv);
+            foreach (var InputPath in InputPaths) {
+                Util.Walk(InputPath, "*.csv", ReadCsv);
+            }
+
             Util.Walk(TempletPath, "*.*", GenCodeFormTemplet);
             Debug.Log("Done config file" + totalFileNum);
         }

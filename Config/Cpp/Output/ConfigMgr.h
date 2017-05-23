@@ -26,10 +26,12 @@ public:
 	void PrintAll();
 
 public:
+    const CCFG_SJScene &GetSJScene() const { return m_stSJScene;}
     const CCFG_VipLevelTest &GetVipLevelTest() const { return m_stVipLevelTest;}
     const CCFG_VipLevelTest2 &GetVipLevelTest2() const { return m_stVipLevelTest2;}
 
 private:
+    CCFG_SJScene m_stSJScene;
     CCFG_VipLevelTest m_stVipLevelTest;
     CCFG_VipLevelTest2 m_stVipLevelTest2;
 

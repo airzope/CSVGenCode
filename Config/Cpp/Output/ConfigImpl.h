@@ -10,6 +10,19 @@
 #include <map>
 using namespace std;
 
+class CCFG_SJScene {
+    static const char* FILE_NAME;
+public:
+    CCFG_SJScene() { };
+    ~CCFG_SJScene() { };
+
+    int Load(const char* szDir);
+    void Clear() { m_mapContent.clear(); }
+    int Print() const;
+    const SCFG_SJScene* Find( int  SceneLevel) const;
+private:
+    map<int, SCFG_SJScene> m_mapContent;
+};
 class CCFG_VipLevelTest {
     static const char* FILE_NAME;
 public:

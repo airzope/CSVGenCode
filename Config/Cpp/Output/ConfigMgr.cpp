@@ -14,6 +14,9 @@ char* CConfigMgr::ErrorFileName= "";
 int CConfigMgr::LoadAll()
 {
 	int iRet = 0;
+	ErrorFileName = "SJScene";
+	iRet = m_stSJScene.Load(CFG_CSV_DIR);
+	SO_CFG_RT_IF_NOT_ZERO(m_stSJScene.Load, -1);
 	ErrorFileName = "VipLevelTest";
 	iRet = m_stVipLevelTest.Load(CFG_CSV_DIR);
 	SO_CFG_RT_IF_NOT_ZERO(m_stVipLevelTest.Load, -1);
@@ -33,6 +36,7 @@ int CConfigMgr::Reload()
 
 void CConfigMgr::PrintAll()
 {
+	m_stSJScene.Print();
 	m_stVipLevelTest.Print();
 	m_stVipLevelTest2.Print();
 

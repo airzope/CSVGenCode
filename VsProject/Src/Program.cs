@@ -30,6 +30,7 @@ class Program {
     static string OutputDir = null;
     static string ConfigFile = null;
 
+
     static void Main(string[] args) {
         if (args.Length == 0) {
             args = new string[] {
@@ -37,7 +38,7 @@ class Program {
                 //"-o=../Config/Cpp/Output",
                 //"-t=../Config/Cpp/Templet",
                 //"-r=../Config/Cpp/KeywordMapRule.txt"
-                "-i=../XLS",
+                "-i=../XLS|../PXLS",
                 "-o=../OutCSV",
                 "-xls2csv",
             };
@@ -56,7 +57,7 @@ class Program {
                 return;
             }
             var gener = new CSVGenCode.Exl2CSV();
-            gener.ConvertCSV(_P(InputDir), _P(OutputDir));
+            gener.ConvertCSV(DealInputDir(), _P(OutputDir));
         } else {
             if (CheckInvalid(TempletPath, "TempletPath", "t") ||
                 CheckInvalid(InputDir, "InputDir", "i") ||
@@ -67,10 +68,22 @@ class Program {
                 return;
             }
             var gener = new CSVGenCode.CSVToCppCodeGen();
-            gener.GenCode(_P(InputDir), _P(OutputDir), _P(TempletPath), _P(ConfigFile));
+            gener.GenCode(DealInputDir(), _P(OutputDir), _P(TempletPath), _P(ConfigFile));
         }
     }
 
+    static private List<string> DealInputDir() {
+        var inputs = InputDir.Split('|');
+        List<string> inputDirs = new List<string>();
+        foreach (var input in inputs) {
+            inputDirs.Add(_P(input));
+        }
+        foreach (var input in inputDirs) {
+            Debug.LogError(input);
+        }
+        Debug.LogError("---------------------");
+        return inputDirs;
+    }
     static bool CheckInvalid(string val, string valName, string key) {
         if (string.IsNullOrEmpty(val)) {
             Debug.LogError("Error: missing val " + valName + " please use -" + key + "=XxxxXx to input the val");

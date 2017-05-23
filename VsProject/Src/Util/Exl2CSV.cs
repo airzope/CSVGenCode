@@ -17,7 +17,7 @@ namespace CSVGenCode {
 
         public const string LINE_END_TAG = "\r\n";
         public const string CSV_SEP = ",";
-        const string IGNORE_tYPE_TAG = "Reject";
+        const string IGNORE_tYPE_TAG = "reject";
         string OutputPath;
         public Exl2CSV() { }
         public class ExlInfo {
@@ -41,7 +41,7 @@ namespace CSVGenCode {
             }
         }
 
-        public void ConvertCSV(string InputPath, string OutputPath) {
+        public void ConvertCSV(List<string> InputPaths, string OutputPath) {
             this.OutputPath = OutputPath;
             var paths = new Dictionary<string, string>();
             Action<string> GetTypeFunc = (path) => {
@@ -50,7 +50,7 @@ namespace CSVGenCode {
                 var dirName = Path.GetDirectoryName(path);
                 if (!fileName.Contains("+")) {
                     fileName = fileName.Split('.')[0];
-                    paths.Add(Path.Combine(dirName, fileName), path);
+                    paths.Add(fileName, path);
                 }
             };
             List<ExlInfo> exlInfo = new List<ExlInfo>();
@@ -60,15 +60,17 @@ namespace CSVGenCode {
                     var dirName = Path.GetDirectoryName(path);
                     fileName = fileName.Split('.')[0];
                     fileName = fileName.Remove(fileName.IndexOf("+"));
-                    var prefixPath = Path.Combine(dirName, fileName);
-                    if (paths.ContainsKey(prefixPath)) {
-                        exlInfo.Add(new ExlInfo(paths[prefixPath], path));
+                    if (paths.ContainsKey(fileName)) {
+                        exlInfo.Add(new ExlInfo(paths[fileName], path));
                     }
                 }
             };
-
-            Util.Walk(InputPath, "*.xls|*.xlsx", GetTypeFunc);
-            Util.Walk(InputPath, "*.xls|*.xlsx", GetContentFunc);
+            foreach (var InputPath in InputPaths) {
+                Util.Walk(InputPath, "*.xls|*.xlsx", GetTypeFunc);
+            }
+            foreach (var InputPath in InputPaths) {
+                Util.Walk(InputPath, "*.xls|*.xlsx", GetContentFunc);
+            }
             foreach (var item in exlInfo) {
                 var attrInfo = ExtractAttrInfo(item.headPath, item.contentPath);
                 curHeadPath = item.headPath;
@@ -131,7 +133,7 @@ namespace CSVGenCode {
                         Debug.LogError(string.Format("{0} do not have col {1}", contentExlPath, comment));
                         continue;
                     }
-                    if (soType == IGNORE_tYPE_TAG) {
+                    if (soType.ToLower() == IGNORE_tYPE_TAG) {
                         continue;
                     }
                     attrInfos.Add(new AttrInfo(comment, soType, attrName, tile2Idx[comment]));
@@ -264,6 +266,10 @@ namespace CSVGenCode {
         }
 
         private static void SaveTo(string CSVPath, StringBuilder stringBuilder, Encoding encoding) {
+            var dir = Path.GetDirectoryName(CSVPath);
+            if (!Directory.Exists(dir)) {
+                Directory.CreateDirectory(dir);
+            }
             using (FileStream fileStream = new FileStream(CSVPath, FileMode.Create, FileAccess.Write)) {
                 using (TextWriter textWriter = new StreamWriter(fileStream, encoding)) {
                     textWriter.Write(stringBuilder.ToString());
