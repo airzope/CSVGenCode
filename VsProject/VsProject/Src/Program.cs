@@ -32,16 +32,21 @@ class Program {
 
 
     static void Main(string[] args) {
-        if (args.Length == 0) {
-            args = new string[] {
-                //"-i=../Input",
-                //"-o=../Config/Cpp/Output",
-                //"-t=../Config/Cpp/Templet",
-                //"-r=../Config/Cpp/KeywordMapRule.txt"
-                "-i=../XLS|../PXLS",
-                "-o=../OutCSV",
-                "-xls2csv",
-            };
+        bool hasNoArgs = args.Length == 0;
+        if (hasNoArgs) {
+            const string numFileName = "num.txt";
+            const string configFilePrefix = "config{0}.txt";
+            //模拟输入
+            var numStr = File.ReadAllText("num.txt");
+            int num = 0;
+            if (int.TryParse(numStr, out num)) {
+                num = num % 2;
+            } else {
+                Debug.LogError("hasNoArgs and num.txt parse error" + numStr);
+                return;
+            }
+            File.WriteAllText(numFileName,(num +1).ToString());
+            args = File.ReadAllLines(string.Format(configFilePrefix, num));
         }
         foreach (var arg in args) {
             DealParams(arg);
@@ -69,6 +74,9 @@ class Program {
             }
             var gener = new CSVGenCode.CSVToCppCodeGen();
             gener.GenCode(DealInputDir(), _P(OutputDir), _P(TempletPath), _P(ConfigFile));
+        }
+        if (hasNoArgs) {
+            Console.Read();
         }
     }
 
