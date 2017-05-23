@@ -1,4 +1,5 @@
 @echo off
 cd ./Bin
-CSVGenCode.exe "-i=../XLS|../PXLS" -o=../Input/ -xls2csv
-CSVGenCode.exe -i=../Input -o=../Config/Cpp/Output -t=../Config/Cpp/Templet -r=../Config/Cpp/KeywordMapRule.txt
+CSVGenCode.exe "-i=../XLS/XLS1|../XLS/XLS2" -o=../CSV/ -xls2csv
+cd ..
+call CopyToProject.bat

@@ -1,0 +1,47 @@
+#     #RawFileName         		//原始文件名字   
+#     #FileName         		//文件名字 大驼峰法           
+#     #KeyTypeName      		//CSV主键类型   
+#     #KeyType2FuncName       	//CSV中主键属性到方法的映射 参考Type2FuncNameMap        
+#     #KeyName          		//CSV主键名字
+#     #StructName       		//结构体名字
+#     #ClsName          		//类名
+#     #AttriName        		//CSV中属性的名字         
+#     #AttriTypeName            //CSV中属性的类型 
+#     #AttriCommment            //CSV中属性的注释   
+#     #AttriType2FuncName       //CSV中属性到方法的映射 参考Type2FuncNameMap
+#     #KeyTypeColIdx       		//主键下标 默认为第一列 在attrTypeName中以字符 ‘#’ 开头的作为主键
+#
+#CSV文件中填写的类型到生成的代码中的类型的映射
+Type2FuncNameMap = 
+	double:ReadDouble;
+	float:ReadFloat;
+	bool:ReadBool;
+	string:ReadString;
+	int:ReadInt32;
+	int8:ReadInt32;
+	int32:ReadInt32;
+	int64:ReadInt64;
+	uint8:ReadUInt32;
+	uint32:ReadUInt32;
+	uint64:ReadUInt64;
+$$
+#CSV文件中填写的类型到生成的代码中的类型的映射
+Type2CodeTypeMap =
+	double:double;
+	float:float;
+	bool:bool;
+	string:string;
+	int:int;
+	int8:int;
+	int32:int;
+	int64:long;
+	uint8:uint;
+	uint32:uint;
+	uint64:ulong;
+$$
+#结构体前缀
+StructNamePrefix = SCFG_
+$$
+#类名字前缀
+ClassNamePrefix = CCFG_
+$$

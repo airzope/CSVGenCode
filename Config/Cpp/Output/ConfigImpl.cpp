@@ -25,7 +25,7 @@ int CCFG_SJScene::Load(const char* szDir)
 		for (int i = 2; i < oParser.RowCount(); ++i) {
 			SCFG_SJScene conent;
 		    int nColumn = 0;
-		    int SceneLevel = oParser.ReadInt32(i, 0);
+		    int SceneLevel = oParser.ReadUInt32(i, 0);
 		    int llKey = SceneLevel;
 			conent.SceneLevel = oParser.ReadUInt32(i, nColumn++);
 			conent.SceneName = oParser.ReadString(i, nColumn++);
