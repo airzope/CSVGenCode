@@ -73,10 +73,12 @@ namespace CSVGenCode {
             }
             foreach (var item in exlInfo) {
                 var attrInfo = ExtractAttrInfo(item.headPath, item.contentPath);
-                curHeadPath = item.headPath;
-                curContentPath = item.contentPath;
-
-                SaveToCSV(attrInfo, item.contentPath);
+                if (attrInfo != null && attrInfo.Count > 0) {
+                    Debug.LogError("" + item.contentPath + "              num = " + attrInfo.Count);
+                    curHeadPath = item.headPath;
+                    curContentPath = item.contentPath;
+                    SaveToCSV(attrInfo, item.contentPath);
+                }
             }
         }
         static string curContentPath;
@@ -122,6 +124,9 @@ namespace CSVGenCode {
 
                 int rowCount = mSheet.Rows.Count;
                 int colCount = mSheet.Columns.Count;
+                if (colCount < Math.Max(Math.Max(SO_TYPE_IDX, COMMENT_IDX), ATTR_NAM_IDX) + 1) {
+                    return null;
+                }
                 for (int i = 0; i < rowCount; i++) {
                     var comment = mSheet.Rows[i][COMMENT_IDX].ToString().Trim();
                     var attrName = mSheet.Rows[i][ATTR_NAM_IDX].ToString().Trim();

@@ -1,7 +1,0 @@
-E:\UnityProject\UsefulPlugin\AmazingProject\ParserConfigToCoder\Bin\CSVGenCode.exe.config
-E:\UnityProject\UsefulPlugin\AmazingProject\ParserConfigToCoder\Bin\CSVGenCode.exe
-E:\UnityProject\UsefulPlugin\AmazingProject\ParserConfigToCoder\Bin\CSVGenCode.XML
-E:\UnityProject\UsefulPlugin\AmazingProject\ParserConfigToCoder\MyCSVGenCode\VsProject\obj\Debug\CSVGenCode.exe
-E:\UnityProject\UsefulPlugin\AmazingProject\ParserConfigToCoder\MyCSVGenCode\Bin\CSVGenCode.exe.config
-E:\UnityProject\UsefulPlugin\AmazingProject\ParserConfigToCoder\MyCSVGenCode\Bin\CSVGenCode.exe
-E:\UnityProject\UsefulPlugin\AmazingProject\ParserConfigToCoder\MyCSVGenCode\Bin\CSVGenCode.XML
