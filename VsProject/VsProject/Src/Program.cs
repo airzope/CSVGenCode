@@ -54,13 +54,16 @@ class Program {
         if (isHelp) {
             return;
         }
+
         if (isExl2Csv) {
             if ( CheckInvalid(InputDir, "InputDir", "i") ||
-                CheckInvalid(OutputDir, "OutputDir", "o") 
+                CheckInvalid(OutputDir, "OutputDir", "o")||
+                CheckInvalid(ConfigFile, "ConfigFile", "r")
                 ) {
                 Console.Read();
                 return;
             }
+            ConfigHelper.ReadConfig(_P(ConfigFile));
             var gener = new CSVGenCode.Exl2CSV();
             gener.ConvertCSV(DealInputDir(), _P(OutputDir));
         } else {
@@ -72,8 +75,9 @@ class Program {
                 Console.Read();
                 return;
             }
+            ConfigHelper.ReadConfig(_P(ConfigFile));
             var gener = new CSVGenCode.CSVToCppCodeGen();
-            gener.GenCode(DealInputDir(), _P(OutputDir), _P(TempletPath), _P(ConfigFile));
+            gener.GenCode(DealInputDir(), _P(OutputDir), _P(TempletPath));
         }
         if (hasNoArgs) {
             Console.Read();

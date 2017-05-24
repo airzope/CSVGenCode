@@ -29,6 +29,10 @@ namespace CSVGenCode {
     public class GlobalVal {
         public static Dictionary<string, string> Type2FuncNameMap = new Dictionary<string, string>();
         public static Dictionary<string, string> Type2CodeTypeMap = new Dictionary<string, string>();
+        public static Dictionary<string, string> Type2AttrPrefixMap = new Dictionary<string, string>();
+        public static Dictionary<string, string> Type2AttrPostfixMap = new Dictionary<string, string>();
+
+
         public static string StructNamePrefix = "";
         public static string ClassNamePrefix = "";
         public static string CSVType2FuncName(string typeName) {
@@ -47,10 +51,31 @@ namespace CSVGenCode {
                 return typeName;
             }
         }
+        public static string CSVType2AttrPrefix(string typeName) {
+            if (Type2AttrPrefixMap.ContainsKey(typeName)) {
+                return Type2AttrPrefixMap[typeName];
+            } else {
+                Debug.LogError("Type2AttrPrefixMap ErrorType " + typeName);
+                return typeName;
+            }
+        }
+        public static string CSVType2AttrPostfix(string typeName) {
+            if (Type2AttrPostfixMap.ContainsKey(typeName)) {
+                return Type2AttrPostfixMap[typeName];
+            } else {
+                Debug.LogError("Type2AttrPostfixMap ErrorType " + typeName);
+                return typeName;
+            }
+        }
+
+
+
         public static int CommentIdx = 0;
         public static int AttrNameIdx = 1;
         public static int TypeIdx = 2;
         public static int MaxHeadIdx = 3;
+
+        public static bool IsKeepRawAttrName = false;
 
     }
 
@@ -77,10 +102,15 @@ namespace CSVGenCode {
         public string AttriCommment;  //CSV中属性的名字
         public string AttriTypeName;  //CSV中属性的类型
         public string AttriName;      //CSV中属性的注释
+        public string AttriTypePrefix;      //CSV中属性的注释
+        public string AttriTypePostfix;      //CSV中属性的注释
         //gen by rule
         public string AttriType2FuncName;//CSV中属性到方法的映射 参考Type2FuncNameMap
         public void Init() {
             AttriType2FuncName = GlobalVal.CSVType2FuncName(AttriTypeName);
+            AttriTypePrefix = GlobalVal.CSVType2AttrPrefix(AttriTypeName);
+            AttriTypePostfix = GlobalVal.CSVType2AttrPostfix(AttriTypeName);
+            AttriName = AttriTypePrefix + ( GlobalVal.IsKeepRawAttrName ? AttriName : AttriName.ToBigCamel() );
             AttriTypeName = GlobalVal.CSVType2CodeType(AttriTypeName);
         }
     }
@@ -109,8 +139,7 @@ namespace CSVGenCode {
             var fileName = Path.GetFileName(path);
             return Path.Combine(OutputPath, fileName);
         }
-        public void GenCode(List<string> InputPaths, string OutputPath, string TempletPath, string ConfigFile) {
-            ConfigHelper.ReadConfig(ConfigFile);
+        public void GenCode(List<string> InputPaths, string OutputPath, string TempletPath) {
             this.OutputPath = OutputPath;
             foreach (var InputPath in InputPaths) {
                 Util.Walk(InputPath, "*.csv", ReadCsv);
@@ -250,6 +279,8 @@ namespace CSVGenCode {
             info = info.Replace("#AttriType2FuncName", colInfo.AttriType2FuncName);
             info = info.Replace("#AttriTypeName", colInfo.AttriTypeName);
             info = info.Replace("#AttriCommment", colInfo.AttriCommment);
+            info = info.Replace("#AttriTypePrefix", colInfo.AttriTypePrefix);
+            info = info.Replace("#AttriTypePostfix", colInfo.AttriTypePostfix);
             return info;
         }
 

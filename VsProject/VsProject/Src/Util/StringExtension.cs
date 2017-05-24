@@ -22,7 +22,7 @@ namespace CSVGenCode {
             }
             return result.ToString();
         }
-
+        
         public static String ToBigCamel(this String name) {
             StringBuilder result = new StringBuilder();
             if (string.IsNullOrEmpty(name)) {
@@ -35,10 +35,17 @@ namespace CSVGenCode {
                 if (string.IsNullOrEmpty(camel)) {
                     continue;
                 }
-                result.Append(camel.Substring(0, 1).ToUpper());
-                result.Append(camel.Substring(1).ToLower());
+                result.Append(camel._ToFirstBig());
             }
             return result.ToString();
+        }
+        static String _ToFirstBig(this String name) {
+            if (string.IsNullOrEmpty(name)) {
+                return "";
+            } else {
+                var ret = name.ToLower().Substring(1);
+                return "" + name[0].ToString().ToUpper() + ret;
+            }
         }
     }
 }

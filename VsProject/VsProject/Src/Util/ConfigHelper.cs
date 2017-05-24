@@ -45,6 +45,16 @@ namespace CSVGenCode {
                         GlobalVal.Type2CodeTypeMap = map;
                     }
                     break;
+                case "Type2AttrPrefixMap": {
+                        var map = ParseMap(val);
+                        GlobalVal.Type2AttrPrefixMap = map;
+                    }
+                    break;
+                case "Type2AttrPostfixMap": {
+                        var map = ParseMap(val);
+                        GlobalVal.Type2AttrPostfixMap = map;
+                    }
+                    break;
                 case "StructNamePrefix": {
                         GlobalVal.StructNamePrefix = val.Trim();
                     }
@@ -53,6 +63,27 @@ namespace CSVGenCode {
                         GlobalVal.ClassNamePrefix = val.Trim();
                     }
                     break;
+                case "CommentIdx": {
+                        GlobalVal.CommentIdx = int.Parse(val.Trim());
+                    }
+                    break;
+                case "AttrNameIdx": {
+                        GlobalVal.AttrNameIdx = int.Parse(val.Trim());
+                    }
+                    break;
+                case "TypeIdx": {
+                        GlobalVal.TypeIdx = int.Parse(val.Trim());
+                    }
+                    break;
+                case "MaxHeadIdx": {
+                        GlobalVal.MaxHeadIdx = int.Parse(val.Trim());
+                    }
+                    break;
+                case "IsKeepRawAttrName": {
+                        GlobalVal.IsKeepRawAttrName = bool.Parse(val.Trim());
+                    }
+                    break;
+                    
                 default:
                     Debug.LogError("Error Key = " + key);
                     break;

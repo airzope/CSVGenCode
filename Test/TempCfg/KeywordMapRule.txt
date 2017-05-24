@@ -1,4 +1,4 @@
-﻿#     #RawFileName         		//原始文件名字   
+#     #RawFileName         		//原始文件名字   
 #     #FileName         		//文件名字 大驼峰法           
 #     #KeyTypeName      		//CSV主键类型   
 #     #KeyType2FuncName       	//CSV中主键属性到方法的映射 参考Type2FuncNameMap        
@@ -15,25 +15,61 @@
 Type2FuncNameMap = 
 	double:ReadDouble;
 	float:ReadFloat;
-	uint8:ReadInt32;
-	int32:ReadInt32;
+	bool:ReadBool;
+	int8:ReadInt32;
+	uint8:ReadUInt32;
 	int:ReadInt32;
-	int64:ReadInt64;
+	int32:ReadInt32;
 	uint32:ReadUInt32;
+	int64:ReadInt64;
 	uint64:ReadUInt64;
 	string:ReadString;
+	intarray:ReadIntArray;
 $$
 #CSV文件中填写的类型到生成的代码中的类型的映射
 Type2CodeTypeMap =
 	double:double;
 	float:float;
-	uint8:int;
-	int32:int;
-	int:int;
-	int64:long long;
-	uint32:int;
-	uint64:long long;
+	bool:bool;
+	int8:int32_t;
+	uint8:uint32_t;
+	int:int32_t;
+	int32:int32_t;
+	uint32:uint32_t;
+	int64:int64_t;
+	uint64:uint64_t;
 	string:string;
+	intarray:IntArray;
+$$
+#CSV文件中填写的类型到生成的代码中的类型的映射
+Type2AttrPrefixMap =
+	double:d;
+	float:f;
+	bool:b;
+	int8:ch;
+	uint8:uch;
+	int:i;
+	int32:i;
+	uint32:dw;
+	int64:ll;
+	uint64:ull;
+	string:str;
+	intarray:st;
+$$
+#CSV文件中填写的类型到生成的代码中的类型的映射
+Type2AttrPostfixMap =
+	double:;
+	float:;
+	bool:;
+	int8:;
+	uint8:;
+	int:;
+	int32:;
+	uint32:;
+	int64:;
+	uint64:;
+	string:;
+	intarray:;
 $$
 #结构体前缀
 StructNamePrefix = SCFG_
@@ -46,11 +82,14 @@ $$
 CommentIdx = 0
 $$
 #属性名的行下标(0开始)
-AttrNameIdx = 1
+AttrNameIdx = 2
 $$
 #属性类型的行下标(0开始)
-TypeIdx = 2
+TypeIdx = 1
 $$
 #表格内容开始的下标(1开始)
 MaxHeadIdx = 3
+$$
+#属性是否保持和表格中的一样(1开始)
+IsKeepRawAttrName = false
 $$
